@@ -1,0 +1,83 @@
+version: 2
+
+project_name: repo
+
+before:
+  hooks:
+    - go mod download
+    - go mod verify
+
+builds:
+  - id: repo
+    main: ./cmd/repo
+    binary: repo
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w
+      - -X github.com/jedi-knights/repo/internal/cli.Version={{.Version}}
+      - -X github.com/jedi-knights/repo/internal/cli.Commit={{.ShortCommit}}
+    flags:
+      - -trimpath
+
+archives:
+  - id: repo
+    ids: [repo]
+    # repo_0.1.0_linux_amd64.tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    files:
+      - README.md
+      - LICENSE
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+# Changelog is managed by go-semantic-release (CHANGELOG.md).
+changelog:
+  disable: true
+
+release:
+  github:
+    owner: jedi-knights
+    name: repo
+  draft: false
+  prerelease: auto
+  name_template: "v{{.Version}}"
+
+# Publish a Homebrew formula to jedi-knights/homebrew-tap on every
+# release. The GITHUB_TOKEN passed to GoReleaser needs `repo` scope on
+# the tap repository so it can push the generated formula.
+brews:
+  - name: repo
+    ids: [repo]
+    repository:
+      owner: jedi-knights
+      name: homebrew-tap
+      branch: main
+    directory: Formula
+    homepage: https://github.com/jedi-knights/repo
+    description: Demo CLI over the repometa library for scanning source repositories.
+    license: MIT
+    commit_author:
+      name: goreleaserbot
+      email: goreleaserbot@users.noreply.github.com
+    commit_msg_template: "chore(formula): update repo to {{ .Tag }}"
+    install: |
+      bin.install "repo"
+    test: |
+      system "#{bin}/repo", "version"

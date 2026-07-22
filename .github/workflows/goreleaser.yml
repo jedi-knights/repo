@@ -1,0 +1,44 @@
+name: GoReleaser
+
+# Triggered by the v* tag that go-semantic-release pushes during the
+# release workflow. GoReleaser reads the version from the tag, cross-compiles
+# for all supported platforms, packages the archives, creates the GitHub
+# release with all assets attached, and publishes a Homebrew formula to
+# jedi-knights/homebrew-tap.
+
+on:
+  push:
+    tags:
+      # Match only full semver tags (e.g. v1.2.3). Floating major-version tags
+      # like v0 or v1 also match 'v*' and would trigger a duplicate release run.
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  goreleaser:
+    name: Build and Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # GoReleaser needs full history to generate a correct changelog.
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - uses: goreleaser/goreleaser-action@v7
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --clean
+        env:
+          # GH_TOKEN needs `repo` scope on jedi-knights/homebrew-tap so
+          # GoReleaser's brews block can push the generated formula.
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
