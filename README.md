@@ -42,6 +42,7 @@ Root: /path/to/some/repo   Components: 2   Monorepo: false
 - **Bounded scans** — the scanner's directory / depth / file-size caps are exposed as flags so operators can trade breadth for time
 - **Small surface** — three commands (`scan`, `summary`, `version`), a handful of flags, no plugins
 - **First-party design-pattern demonstration** — Adapter (scanner), Strategy + Factory (renderers), Constructor DI (analyzer, root command)
+- **Pinned to a repometa pseudo-version** — swap to a semver tag once repometa cuts one
 
 ## Requirements
 

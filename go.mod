@@ -2,10 +2,8 @@ module github.com/jedi-knights/repo
 
 go 1.26.2
 
-replace github.com/jedi-knights/repometa => ../repometa
-
 require (
-	github.com/jedi-knights/repometa v0.0.0
+	github.com/jedi-knights/repometa v0.0.0-20260721102449-b521a4f24724
 	github.com/olekukonko/tablewriter v1.1.4
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
