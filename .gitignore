@@ -1,0 +1,15 @@
+# Build output
+bin/
+/repo
+
+# Test / coverage
+*.out
+coverage.txt
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Local task tracking
+TODO.md
