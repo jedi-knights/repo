@@ -9,7 +9,7 @@
 [![GoReleaser](https://github.com/jedi-knights/repo/actions/workflows/goreleaser.yml/badge.svg)](https://github.com/jedi-knights/repo/actions/workflows/goreleaser.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Badge](https://github.com/jedi-knights/repo/actions/workflows/badge.yaml/badge.svg)](https://github.com/jedi-knights/repo/actions/workflows/badge.yaml)
-[![Coverage](https://img.shields.io/badge/Coverage-74.8%25-yellow)](https://jedi-knights.github.io/repo/?v=3)
+[![Coverage](https://img.shields.io/badge/Coverage-74.8%25-yellow)](https://jedi-knights.github.io/repo/?v=4)
 
 [Overview](#overview) · [Features](#features) · [Requirements](#requirements) · [Installation](#installation) · [Usage](#usage) · [Configuration](#configuration) · [Development](#development) · [Contributing](#contributing)
 
